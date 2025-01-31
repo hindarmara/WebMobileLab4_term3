@@ -1,6 +1,5 @@
-<?php include('../header.php'); ?>
-
-<?php
+<?php 
+include('../header.php'); 
 include("../display_student/process_display.php");
 ?>
 

@@ -2,7 +2,7 @@
 <!-- menu on the top -->
 <h1>List of Students</h1>
 <p>
-<a href="/crud/create/create.php" class="btn btn-small btn-success">Create New</a>
+    <a href="/crud/create/create.php" class="btn btn-small btn-success">Create New</a>
 </p>
 
 <?php
@@ -11,14 +11,13 @@ $res = $db->query('SELECT * FROM Students');
 
 if ($res) {
     echo "<table width='100%' class='table-striped'>\n";
-    echo "<tr><th>Student ID</th>".
-        "<th>First Name</th>".
-        "<th>Last Name</th>".
-        "<th>School</th>". 
+    echo "<tr><th>Student ID</th>" .
+        "<th>First Name</th>" .
+        "<th>Last Name</th>" .
+        "<th>School</th>" .
         "<th>Option</th></tr>\n";
 
-    while ($row = $res->fetchArray()) 
-    {
+    while ($row = $res->fetchArray()) {
         echo "<tr><td>{$row['StudentID']}</td>";
         echo "<td>{$row['FirstName']}</td>";
         echo "<td>{$row['LastName']}</td>";
@@ -28,7 +27,7 @@ if ($res) {
         echo "&nbsp;";
         echo "<a class='btn btn-small btn-warning' href='./update/update.php?id={$row['StudentID']}'>update</a>";
         echo "&nbsp;";
-        echo "<a class='btn btn-small btn-danger' href='/crud/delete/delete.php?id={$row['StudentID']}'>delete</a>";
+        echo "<a class='btn btn-small btn-danger' href='./delete/delete.php?id={$row['StudentID']}'>delete</a>";
         echo "</td></tr>\n";
     }
     echo "<hr />";
@@ -37,4 +36,4 @@ if ($res) {
     echo "No data found.";
 }
 
-include 'footer.php'?>
+include 'footer.php' ?>
