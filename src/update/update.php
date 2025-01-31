@@ -11,24 +11,27 @@ include("../display_student/process_display.php");
         <form action="process_update.php" method="post">
 
             <div class="form-group">
-                <input type="hidden" value="<?php echo $row['StudentID']; ?>" name="StudentId" />
+                <input type="hidden" value="<?php echo htmlspecialchars($row['StudentID']); ?>" name="StudentID" />
                 <label class="control-label">Student ID</label>
-                <?php echo $row['StudentID']; ?>
+                <?php echo htmlspecialchars($row['StudentID']); ?>
             </div>
 
             <div class="form-group">
                 <label for="FirstName" class="control-label">First Name</label>
-                <input for="FirstName" class="form-control" name="FirstName" id="FirstName" value="<?php echo $row['FirstName']; ?>" />
+                <input type="text" class="form-control" name="FirstName" id="FirstName" 
+                    value="<?php echo htmlspecialchars($row['FirstName']); ?>" required />
             </div>
 
             <div class="form-group">
                 <label for="LastName" class="control-label">Last Name</label>
-                <input for="LastName" class="form-control" name="LastName" id="LastName" value="<?php echo $row['LastName']; ?>" />
+                <input type="text" class="form-control" name="LastName" id="LastName" 
+                    value="<?php echo htmlspecialchars($row['LastName']); ?>" required />
             </div>
 
             <div class="form-group">
                 <label for="School" class="control-label">School</label>
-                <input for="School" class="form-control" name="School" id="School" value="<?php echo $row['School']; ?>" />
+                <input type="text" class="form-control" name="School" id="School" 
+                    value="<?php echo htmlspecialchars($row['School']); ?>" required />
             </div>
 
             <div class="form-group">
@@ -36,6 +39,7 @@ include("../display_student/process_display.php");
                 &nbsp;&nbsp;&nbsp;
                 <input type="submit" value="Update" name="update" class="btn btn-warning" />
             </div>
+
         </form>
     </div>
 </div>

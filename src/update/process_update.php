@@ -1,45 +1,44 @@
 <?php
 if (isset($_POST['update'])) {
 
-    include("../../inc_db_params.php");
-    include("../../utils.php");
+    include("../inc_db_params.php");
+    include("../utils.php");
 
-    /* change db to world db */
-    mysqli_select_db($conn, $db_name);
+    if ($db !== FALSE) {
+        // Sanitize input to prevent SQL Injection & XSS
+        $StudentID = sanitize_input($_POST['StudentID']);
+        $FirstName = sanitize_input($_POST['FirstName']);
+        $LastName = sanitize_input($_POST['LastName']);
+        $School = sanitize_input($_POST['School']);
 
-    if ($conn !== FALSE) {
-        extract($_POST);
+        // SQL query to update the record
+        $sql = "UPDATE Students SET FirstName = :firstName, LastName = :lastName, School = :school WHERE StudentID = :studentID";
 
-        $StudentId = sanitize_input($StudentId);
-        $FirstName = sanitize_input($FirstName);
-        $LastName = sanitize_input($LastName);
-        $School = sanitize_input($School);
+        // Prepare statement
+        $stmt = $db->prepare($sql);
 
-        $sql = "";
-        $sql .= " UPDATE Students SET FirstName=?, LastName=?, School=?";
-        $sql .= " WHERE StudentId=?";
+        // Bind parameters
+        $stmt->bindValue(':firstName', $FirstName, SQLITE3_TEXT);
+        $stmt->bindValue(':lastName', $LastName, SQLITE3_TEXT);
+        $stmt->bindValue(':school', $School, SQLITE3_TEXT);
+        $stmt->bindValue(':studentID', $StudentID, SQLITE3_TEXT);
 
-        /* create a prepared statement */
-        if ($stmt = mysqli_prepare($conn, $sql)) {
+        // Execute query
+        $exec = $stmt->execute();
 
-            /* bind parameters for markers */
-            mysqli_stmt_bind_param($stmt, "ssss", $FirstName, $LastName, $School, $StudentId);
-
-            /* execute query */
-            $exec = mysqli_stmt_execute($stmt);
-
-            if ($exec === false) {
-                error_log('mysqli execute() failed: ');
-                error_log(print_r(htmlspecialchars($stmt->error), true));
-            }
+        // Check if update was successful
+        if ($exec) {
+            header('Location: ../'); // Redirect to student list
+            exit;
+        } else {
+            echo "Error updating record: " . $db->lastErrorMsg();
         }
-    };
 
-    mysqli_stmt_close($stmt);
-    mysqli_close($conn);
-
-    if ($exec === true) {
-        header('Location: ../list');
-        exit;
+        // Close statement
+        $stmt->close();
     }
+
+    // Close database connection
+    $db->close();
 }
+?>
