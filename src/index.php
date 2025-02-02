@@ -2,11 +2,13 @@
 <!-- menu on the top -->
 <h1>List of Students</h1>
 <p>
-    <a href="/crud/create/create.php" class="btn btn-small btn-success">Create New</a>
+    <a href="./create_student/create.php" class="btn btn-small btn-success">Create New</a>
 </p>
 
 <?php
 include("./inc_db_params.php");
+include("./insert_default_student.php");
+
 $res = $db->query('SELECT * FROM Students');
 
 if ($res) {
